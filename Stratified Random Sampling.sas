@@ -30,15 +30,15 @@ if sex = 1 then gender ="male";
 else gender = "female";
 run;
 
-proc freq data=elina.birth1; /*Sc-Que 1...chi sq test betn recoded area and gender*/
+proc freq data=elina.birth1; /*Success...chi sq test betn recoded area and gender*/
 tables gender*recoded_area/chisq;
 run;
 
-data elina.birthdeath1;	/*Sc-Que 2..created birthdeath file */
+data elina.birthdeath1;	/*Success..created birthdeath file */
 merge elina.birth1 elina.death;
 by crid;
 run;
-data elina.birthdeath1;	/*Sc-Que 2..aadm colmn created in birthdeath file */
+data elina.birthdeath1;	/*Success..aadm colmn created in birthdeath file */
 set elina.birthdeath1;
 aadm=(DOD-DOB)/30.46;
 format aadm 5.2;
@@ -66,7 +66,7 @@ if aadm = <10 then age="under_age";
 else if aadm = <30 then age="middle_age";
 else age="over_age";
 run;
-/* No-2. Independent sample TTest on aadm by reco area*/
+/* Success. Independent sample TTest on aadm by reco area*/
 proc ttest data=elina.birthdeath1;
 class recoded_area;
 var aadm;
@@ -78,9 +78,7 @@ proc gchart data=elina.birthdeath1;
 pie recoded_area/discrete value=inside percent=inside slice=inside;
 run;
 
-/* Nov 20,2018*/
-
-/*No-3. pie chart of reco area(TA and CA)*/
+/*Success. pie chart of reco area(TA and CA)*/
 proc gchart data=elina.birthdeath1;
 pie recoded_area/discrete value=inside percent=inside slice=outside;
 run;
@@ -88,11 +86,11 @@ run;
 proc gchart data=elina.birthdeath1;
 hbar area/discrete;
 run;
-/*NO-4. cross tab of reco area aand gender*/
+/*Success. cross tab of reco area aand gender*/
 proc freq data=elina.birthdeath1;
 tables recoded_area*gender;
 run;
-/*No-5. freq table of recoded area*/
+/*Success freq table of recoded area*/
 proc freq data=elina.birthdeath1;
 tables recoded_area;
 run;
@@ -107,7 +105,7 @@ tables area;
 format area rc.;
 where area<=4;
 run;
-/*no-6. freq table of area without comparison area */
+/*Success freq table of area without comparison area */
 proc freq data=elina.birthdeath1;
 tables area;
 where area<=4;
